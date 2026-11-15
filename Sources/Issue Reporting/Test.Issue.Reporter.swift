@@ -1,6 +1,6 @@
-public import Test
 internal import Environment
 internal import Loader
+public import Test
 
 extension Test.Issue {
 
@@ -11,8 +11,8 @@ extension Test.Issue {
 
 extension Test.Issue.Reporter {
 
-    /// What an adapter does with an issue. The adapter sets it when the process first reports.
     // WHY: set once, by the adapter's install function, which `resolve` calls exactly once before any read.
+    /// What an adapter does with an issue. The adapter sets it when the process first reports.
     nonisolated(unsafe) public static var record: (@Sendable (Test.Issue) -> Void)?
 
     /// The C name of the function an adapter exports to install itself.

@@ -14,6 +14,9 @@ let package = Package(
         .library(name: "Issue Reporting", targets: ["Issue Reporting"]),
         .library(name: "Issue Reporting Apple Testing", targets: ["Issue Reporting Apple Testing"]),
     ],
+    traits: [
+        .trait(name: "AppleTesting", description: "Records reported issues into Apple's Swift Testing")
+    ],
     dependencies: [
         .package(url: "https://github.com/swift-molecules/swift-test.git", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-source.git", branch: "main"),
@@ -36,7 +39,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Issue Reporting"),
                 .product(name: "Test", package: "swift-test"),
-                .product(name: "Test Apple", package: "swift-test-apple"),
+                .product(name: "Test Apple", package: "swift-test-apple", condition: .when(traits: ["AppleTesting"])),
             ]
         ),
         .testTarget(
@@ -62,5 +65,6 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
             .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
             .enableUpcomingFeature("InferIsolatedConformances"),
             .enableExperimentalFeature("Lifetimes"),
+            .treatAllWarnings(as: .error),
         ]
 }
